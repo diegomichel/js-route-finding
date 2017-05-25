@@ -1,0 +1,65 @@
+<head></head>
+<body>
+  <canvas height=400px width=400px></canvas>
+</body>
+<script>
+var squareSize = 30;
+var squarePadding = 15;
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+var c=document.getElementsByTagName("canvas")[0];
+var ctx=c.getContext("2d");
+var map = [
+[1,1,1,1,1,0,1,1],
+[1,0,0,0,0,0,0,1],
+[1,0,1,1,1,1,0,1],
+[1,0,1,0,1,0,0,1],
+[1,0,1,0,1,1,0,1],
+[1,0,1,0,1,0,0,1],
+[1,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1],
+]
+ctx.beginPath();
+ctx.rect(0,0,10,10);
+ctx.stroke();
+ctx.closePath();
+
+var character = {
+    pos: {x: 3, y: 3},
+    draw: function(){
+        ctx.beginPath();
+        var posX = character.pos.x*(squareSize+squarePadding);
+        var posY = character.pos.y*(squareSize+squarePadding);
+        ctx.arc(posX,posY,30,0,2*Math.PI);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+    }
+}
+
+async function game(){
+    while(true) {
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.beginPath();
+        for(var i=0; i < map.length; i++){
+            for(var j=0;j < map[i].length;j++){
+                if(map[i][j] == 1){
+                    var posX = j*(squareSize+squarePadding);
+                    var posY = i*(squareSize+squarePadding);
+                    ctx.rect(posX, posY, squareSize, squareSize);
+                    ctx.stroke();
+                    ctx.fill();
+                }
+            }
+        }
+        ctx.closePath();
+        character.draw();
+        console.log("Game loop");
+        await sleep(1000);
+    }
+}
+
+game();
+</script>
