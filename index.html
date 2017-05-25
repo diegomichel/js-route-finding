@@ -5,6 +5,7 @@
 <script>
 var squareSize = 30;
 var squarePadding = 15;
+var initialPosition = { x:3, y:3 };
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -27,12 +28,13 @@ ctx.stroke();
 ctx.closePath();
 
 var character = {
-  pos: {x: 3, y: 3},
+  pos: initialPosition,
+  radius: squareSize/2,
   draw: function(){
     ctx.beginPath();
-    var posX = character.pos.x*(squareSize+squarePadding);
-    var posY = character.pos.y*(squareSize+squarePadding);
-    ctx.arc(posX,posY,30,0,2*Math.PI);
+    var posX = character.pos.x*(squareSize+squarePadding)+character.radius;
+    var posY = character.pos.y*(squareSize+squarePadding)+character.radius;
+    ctx.arc(posX,posY,character.radius,0,2*Math.PI);
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
@@ -50,7 +52,6 @@ async function game(){
           var posY = i*(squareSize+squarePadding);
           ctx.rect(posX, posY, squareSize, squareSize);
           ctx.stroke();
-          ctx.fill();
         }
       }
     }
