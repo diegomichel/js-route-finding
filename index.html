@@ -41,7 +41,14 @@ var character = {
   }
 }
 
+function catchEvents(){
+  c.addEventListener('mousemove', function(evt){
+    console.log(evt);
+  })
+}
+
 async function game(){
+  catchEvents();
   while(true) {
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.beginPath();
@@ -60,6 +67,7 @@ async function game(){
     console.log("Game loop");
     await sleep(1000);
   }
+
 }
 
 game();
